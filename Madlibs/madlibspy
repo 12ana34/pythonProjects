@@ -1,0 +1,6 @@
+adj1 = input("Adjective: ")
+noun = input("Noun: ")
+verb = input("Verb: ")
+
+madlib = "Last night I was watching a " + adj1 + " movie together with my " + noun + ". " + "I was also " + verb + " while watching it."
+print(madlib)
