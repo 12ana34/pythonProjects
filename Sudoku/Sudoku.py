@@ -1,23 +1,23 @@
-def find_next_empty(puzzle):
+def find_next_empty(puzzle): #finds -1 values in the matrix which simbolize empty spaces
   for r in range(9):
     for c in range(9):
       if puzzle[r][c] == -1:
         return r,c
   return None, None
 
-def is_valid(puzzle, guess, row, col):
-  row_vals = puzzle[row]
+def is_valid(puzzle, guess, row, col): #checks if the value that we want to enter is already entered either in the row, column or smaller matrix
+  row_vals = puzzle[row]#checks the row
   if guess in row_vals:
     return False
   
-  col_vals = [puzzle[i][col] for i in range(9)]
+  col_vals = [puzzle[i][col] for i in range(9)]#checks the column
   if guess in col_vals:
     return False
 
   row_start = (row // 3) * 3
   col_start = (col // 3) * 3
 
-  for r in range(row_start, row_start+3):
+  for r in range(row_start, row_start+3):#checks the small matrix
     for c in range(col_start, col_start+3):
       if puzzle[r][c] == guess:
         return False
@@ -25,17 +25,17 @@ def is_valid(puzzle, guess, row, col):
   return True
 
 def solve_sudoku(puzzle):
-  row, col = find_next_empty(puzzle)
-  if row is None:
+  row, col = find_next_empty(puzzle)#gets indexes of empty spaces
+  if row is None:#if row is none true is returned and that means there are no more empty spaces left in the matrix which means we won
     return True
   
-  for guess in range(1,10):
-    if is_valid(puzzle, guess, row, col):
-      puzzle[row][col] = guess
-      if solve_sudoku(puzzle):
+  for guess in range(1,10): #pasess the guess
+    if is_valid(puzzle, guess, row, col):#tries to fill the empty space with the guess
+      puzzle[row][col] = guess#fills the empty space with a value
+      if solve_sudoku(puzzle): #calls the function recursevly
         return True
 
-    puzzle[row][col] = -1 #reset the guess
+    puzzle[row][col] = -1 #if the guess for this position is not valid reset it and move on 
 
   return False
 
